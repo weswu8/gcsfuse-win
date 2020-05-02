@@ -77,7 +77,7 @@ It is highly recommended that you should config it as a windows services.
 * In Windows UI, copy the folder with many small files will be very slow. you can zip it. use robocopy or other tools.
 
 ## Supported platforms
-* windows: [blobfs-win](https://github.com/wesley1975/blobfs-win)
+* windows
 
 
 ## Command Line Usage
