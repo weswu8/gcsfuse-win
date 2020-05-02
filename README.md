@@ -8,7 +8,7 @@ GcsFuse-Win is a distributed [FUSE](http://fuse.sourceforge.net) based file syst
 * If you are interested in contributing, please contact me via jie1975.wu@gmail.com
 
 ## Project Goals
-Object storage is one of the most fundamental topic you'll encounter when you decide to start your cloud journey.The main goal of the project is to make azure storage service easy to use for windows box.
+Object storage is one of the most fundamental topic you'll encounter when you decide to start your cloud journey.The main goal of the project is to make gcp storage service easy to use for windows box.
 
 ## Key Updates:
 
@@ -21,7 +21,6 @@ Object storage is one of the most fundamental topic you'll encounter when you de
 ## Features:
 * Implemented these winfsp functions: GetVolumeInfo,SetVolumeLabel, GetSecurityByName, GetFileInfo, open, Create, Read, Write, Cleanup, Close, SetBasicInfo, SetFileSize, CanDelete, Rename, Overwrite, ReadDirectoryEntry, GetDirInfoByName.
 * Allow mount multiple buckets (or part of them) as the local folder.
-* File’s attribute is cached for better performance, the cache are synchronized via azure queue storage.
 * The contents are pre-cached by chunks when there is read operation. This will eliminate the times of http request and increase the performance greatly. 
 * Gcs resumable uploads are used for the write operation. Data is buffered firstly and then be uploaded if the buffer size exceed the threshold. This also can eliminate the times of http request and increase the performance greatly. 
 * You can edit the file content on the fly, especially recommend for the small file, It does not need download, edit and then upload.
