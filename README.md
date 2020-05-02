@@ -5,7 +5,6 @@ GcsFuse-Win is a distributed [FUSE](http://fuse.sourceforge.net) based file syst
 
 ## Important Notes:
 * this tools is still in developing status, you can use at your own risk.
-* If you are interested in contributing, please contact me via jie1975.wu@gmail.com
 
 ## Project Goals
 Object storage is one of the most fundamental topic you'll encounter when you decide to start your cloud journey.The main goal of the project is to make gcp storage service easy to use for windows box.
