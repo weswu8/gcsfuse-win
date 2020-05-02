@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<GcsFuse>
+	<!-- common configuration --> 
+	
+	<Common>
+		<!-- Gcp project Id -->
+		<ProjectId>practical-now-257700</ProjectId>
+		<!--  Gcp service account json file --> 
+		<ServiceAccountFile>gcp_service_account.json</ServiceAccountFile>
+		<!--  the prefix of target buckets or objects --> 
+		<RootPrefix>/practical-now-257700.appspot.com/</RootPrefix>
+		<!--  the dirve letter of local host --> 
+		<MountDrive>F:</MountDrive>
+		<!--  cached object TTL in seconds --> 
+		<CacheTTL>180</CacheTTL>
+	</Common>
+
+
+</GcsFuse>
