@@ -1,7 +1,7 @@
 GcsFuse-Win
 =====
 
-GcsFuse-Win is a distributed [FUSE](http://fuse.sourceforge.net) based file system backed by [Google cloud storage service](https://cloud.google.com/storage). It allows you to mount the buckets/folders in the storage account as a the local folder/driver on Windows system. It support the cluster mode. you can mount the blob container (or part of it) across multiple windows nodes.
+GcsFuse-Win is a distributed [FUSE](http://fuse.sourceforge.net) based file system backed by [Google cloud storage service](https://cloud.google.com/storage). It is the first native version of gcs fuse on windows.It allows you to mount the buckets/folders in the storage account as a the local folder/driver on Windows system. It support the cluster mode. you can mount the blob container (or part of it) across multiple windows nodes.
 
 ## Important Notes:
 * this tools is still in developing status, you can use at your own risk.
