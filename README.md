@@ -58,7 +58,7 @@ It is highly recommended that you should config it as a windows services.
 
 ## Tips
 * the block blob is read only by default. marked with read only flag in the popup properties windows.
-# the size number of the mounted folder is not real.
+* due to you can mount the multiple buckets/buckets/folders, so the size number of the mounted folder is not real.
 
 
 ## Performance Test
