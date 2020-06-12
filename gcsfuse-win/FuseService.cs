@@ -217,13 +217,13 @@ namespace gcsfuse_win
             {
                 /* is the root directory */
                 //Utils.WriteLine("GetFileInfo-ROOT:" + FileName);
-                FileInfo.FileAttributes = (UInt32)FileAttributes.Directory | (UInt32)System.IO.FileAttributes.Archive | (UInt32)System.IO.FileAttributes.NotContentIndexed;
+                FileInfo.FileAttributes = (UInt32)FileAttributes.Directory | (UInt32)System.IO.FileAttributes.NotContentIndexed;
             }
             else if (gcsPath.pathType.Equals(GcsPathType.BUCKET))
             {
                 /* is the container */
                 //Utils.WriteLine("GetFileInfo-CONTAINER:" + FileName);
-                FileInfo.FileAttributes = (UInt32)FileAttributes.Directory | (UInt32)System.IO.FileAttributes.Archive | (UInt32)System.IO.FileAttributes.NotContentIndexed;
+                FileInfo.FileAttributes = (UInt32)FileAttributes.Directory | (UInt32)System.IO.FileAttributes.NotContentIndexed;
                 FileInfo.CreationTime = (UInt64)((DateTime)gcsPath.Created).ToFileTimeUtc();
                 FileInfo.LastAccessTime =
                 FileInfo.LastWriteTime =
@@ -233,7 +233,7 @@ namespace gcsfuse_win
             {
                 /* is the virtual directory */
                 //Utils.WriteLine("GetFileInfo-SUBDIR:" + FileName);
-                FileInfo.FileAttributes = (UInt32)FileAttributes.Directory | (UInt32)System.IO.FileAttributes.Archive | (UInt32)System.IO.FileAttributes.NotContentIndexed;
+                FileInfo.FileAttributes = (UInt32)FileAttributes.Directory | (UInt32)System.IO.FileAttributes.NotContentIndexed;
                 FileInfo.CreationTime =
                 FileInfo.LastAccessTime =
                 FileInfo.LastWriteTime =
@@ -428,6 +428,11 @@ namespace gcsfuse_win
             try
             {
                 // FileName is full win name without the prefix: \\dir\filename
+                if (FileName.ToLower().Contains("desktop.ini") || (FileName.ToLower().Contains("autorun.inf")))
+                {
+                    FileAttributes = (UInt32)System.IO.FileAttributes.Normal;
+                    return STATUS_OBJECT_NAME_NOT_FOUND;
+                }
                 FileNode FileNode = new FileNode(FileName);
                 //Utils.WriteLine("GetSecurityByName: FileName: " + FileName +
                 //                    " , TID: " + Thread.CurrentThread.ManagedThreadId);
@@ -450,6 +455,7 @@ namespace gcsfuse_win
                     return Result;
                 }
                 FileNode.GetFileInfo();
+                if (SecurityDescriptor != null) SecurityDescriptor = FileNode.FileSecurity;
                 FileAttributes = FileNode.FileInfo.FileAttributes;
                 Utils.WriteLine("GetSecurityByName: FileNode: " + FileNode.ToString() +
                                 "; Attributes: " + FileAttributes.ToString() + 
@@ -462,6 +468,8 @@ namespace gcsfuse_win
             }
             return STATUS_SUCCESS;
         }
+
+
         /// <summary>
         /// creat the container, virtual directory or container
         /// </summary>
@@ -524,9 +532,9 @@ namespace gcsfuse_win
                         }
 
                     }
-                    // remove the dir cache
-                    cachedDirsInMemManager.Remove(gcsPath.Parent);
                 }
+                // remove the dir cache
+                cachedDirsInMemManager.Remove(gcsPath.Parent);
             }
             catch (Exception ex)
             {
@@ -585,7 +593,7 @@ namespace gcsfuse_win
                 FileInfo = FileNode.GetFileInfo();
                 FileNode.FileInfo.FileAttributes = FileAttributes;
                 //FileNode.FileSecurity = SecurityDescriptor;
-                FileNode.Openedhandle = FileName;
+                FileNode.Openedhandle = Utils.GetFileKey(FileName);
                 FileNode0 = FileNode;
                 NormalizedName = FileNode.FileName;
                 //Utils.WriteLine("Create: FileNode: " + FileNode.ToString() +
@@ -642,13 +650,15 @@ namespace gcsfuse_win
                 FileNode = FileNode.getFileNode(FileName);
                 if (null == FileNode)
                 {
+                    Utils.WriteLine("Open: FileName: " + FileName +
+                                  " , TID: " + Thread.CurrentThread.ManagedThreadId + "FileNode is null");
                     return STATUS_OBJECT_NAME_NOT_FOUND;
                 }
                 FileInfo = FileNode.GetFileInfo();
                 FileNode0 = FileNode;
                 NormalizedName = FileNode.FileName;
                 /* add handle */
-                FileNode.Openedhandle = FileName;
+                FileNode.Openedhandle = Utils.GetFileKey(FileName);
 
                 Utils.WriteLine("Open: FileNode: " + FileNode.ToString() +
                                   " , TID: " + Thread.CurrentThread.ManagedThreadId);
@@ -1728,7 +1738,7 @@ namespace gcsfuse_win
             catch (Exception ex)
             {
                 Logger.Log(Logger.Level.Error, ex.Message);
-                throw;
+                //throw;
             }
         }
         protected override void OnStop()

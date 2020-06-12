@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Threading;
 
 namespace gcsfuse_win
 {
@@ -62,6 +63,10 @@ namespace gcsfuse_win
                 str = str.Remove(str.Length - suffix.Length, suffix.Length);
             }
             return str;
+        }
+
+        public static string GetFileKey(string filename) {
+            return filename + "-" + Thread.CurrentThread.ManagedThreadId;
         }
     }
 }

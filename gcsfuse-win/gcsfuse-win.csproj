@@ -158,6 +158,7 @@
     <Compile Include="Cache.cs" />
     <Compile Include="CfgReader.cs" />
     <Compile Include="Config.cs" />
+    <Compile Include="ConsoleQuickEditMode .cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="FuseService.cs" />
