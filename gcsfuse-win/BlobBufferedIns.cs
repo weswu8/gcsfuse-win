@@ -116,7 +116,6 @@ namespace gcsfuse_win
             numOfBytesReaded = btsReadedTempBuf.Length;
             Array.Copy(btsReadedTempBuf, 0, outputBuffer, 0, numOfBytesReaded);
             readOffset += numOfBytesReaded + numOfBtsSkiped;
-            btsReadedTempBuf = null;
             return numOfBytesReaded;
         }
 

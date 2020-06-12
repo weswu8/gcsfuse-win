@@ -802,18 +802,15 @@ namespace gcsfuse_win
                 }
                 return bbIns;
             }
-            bbIns = ofm.BIn;
-            if (bbIns == null)
+            if (ofm.BIn == null)
             {
-                bbIns = CreateReadStreamHandle(fileName);
-                OpenedFile newOfe = ofm;
-                newOfe.BIn = bbIns;
+                ofm.BIn = CreateReadStreamHandle(fileName);
                 lock (openedFilesManager)
                 {
-                    openedFilesManager.AddOrUpdate(openedFileHandle.ToString(), newOfe);
+                    openedFilesManager.AddOrUpdate(openedFileHandle.ToString(), ofm);
                 }
             }
-            return bbIns;
+            return ofm.BIn;
         }
         /// <summary>
         /// create the write stream handle by file name
@@ -907,10 +904,10 @@ namespace gcsfuse_win
                                    ", TID: " + Thread.CurrentThread.ManagedThreadId);
                 // get the Read Offset from cache, overwrite the incoming parameter
                 //UInt64 PreOffset = fileNode.GetFileOffsetFromCache();
-                if (FileNode.PreNumbOfBytesReaded > Offset - FileNode.PreOffset)
-                {
-                    FileNode.AbnormalOffsetCount++;
-                }
+                //if (FileNode.PreNumbOfBytesReaded > Offset - FileNode.PreOffset)
+                //{
+                //    FileNode.AbnormalOffsetCount++;
+                //}
                 //if (FileNode.AbnormalOffsetCount > 5){ return STATUS_SUCCESS; }
                 BlobBufferedIns bbIns = GetReadStreamHandle(fileNode.FileName, FileNode.Openedhandle);
                 if (bbIns == null)
@@ -920,6 +917,10 @@ namespace gcsfuse_win
                 }
                 /* avoid the out of boundary error */
                 int bytesToRead = (int)Math.Min((ulong)bbIns.GetBlobSize() - Offset, Length);
+                if (bytesToRead == 0) 
+                {
+                    return STATUS_END_OF_FILE;
+                }
                 Byte[] bytesRead = new byte[bytesToRead];
                 int bytesReaded = 0;
                 lock (bbIns)

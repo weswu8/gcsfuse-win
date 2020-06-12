@@ -351,7 +351,7 @@ namespace gcsfuse_win
             // Create an HTTP request for the media, for a limited byte range.
             StorageService storage = this.storage.Service;
             var uri = new Uri(
-                $"{storage.BaseUri}b/{bucketName}/o/{HttpUtility.UrlEncode(blobName)}?alt=media");
+                $"{storage.BaseUri}b/{bucketName}/o/{HttpUtility.UrlEncode(blobName, System.Text.Encoding.UTF8)}?alt=media");
             var request = new HttpRequestMessage() { RequestUri = uri };
             request.Headers.Range =
                 new System.Net.Http.Headers.RangeHeaderValue(firstByte,
@@ -364,7 +364,7 @@ namespace gcsfuse_win
             }
             else
             {
-                string errMsg = string.Format("Failed to download the blob:{}" + bucketName + "/" + blobName);
+                string errMsg = string.Format("Failed to download the blob:{0}" , bucketName + "/" + blobName);
                 throw new DownloadException(errMsg);
             }
            
