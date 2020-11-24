@@ -32,28 +32,29 @@ Object storage is one of the most fundamental topic you'll encounter when you de
 ## installation
 Installation now is very easy. But I strongly recommend to test and verify it in you environment before you use it. it's at your own risk.
 ### Precondition
-you should have a gcp account, and you should create and download the service account json file.[how to do this?](https://cloud.google.com/docs/authentication/getting-started). pls put the file into the conf/ directory
+	you should have a gcp account, and you should create and download the service account json file.[how to do this?](https://cloud.google.com/docs/authentication/getting-started). pls put the file into the conf/ directory
 ### 1.Install WinFsp
-Download the winfsp-1.7.20038.msi from [WinFsp](https://github.com/billziss-gh/winfsp/releases).lanuch it and install with default configuration.
+    Download the winfsp-1.7.20038.msi from [WinFsp](https://github.com/billziss-gh/winfsp/releases).
+   lanuch it and install with default configuration.
 ### 2.Install blobfs-win
 #### 2.1 Download the blobfs-win released version.
 #### 2.2 Edit configuration file: 
-   Open conf/config.xml
-   change the setting of :
-	<ProjectId>gcp_project_id</ProjectId>
-	<!--  Gcp service account json file --> 
-	<ServiceAccountFile>gcp_service_account.json</ServiceAccountFile>
-	<!--  the prefix of target buckets or objects, use / will mount all buckets --> 
-	<RootPrefix>/bucket_name/</RootPrefix>
-	<!--  the dirve letter of local host --> 
-	<MountDrive>F:</MountDrive>
-	<!--  cached object TTL in seconds --> 
-	<CacheTTL>180</CacheTTL>
+	Open conf/config.xml
+	change the setting of :
+		<ProjectId>gcp_project_id</ProjectId>
+		<!--  Gcp service account json file --> 
+		<ServiceAccountFile>gcp_service_account.json</ServiceAccountFile>
+		<!--  the prefix of target buckets or objects, use / will mount all buckets --> 
+		<RootPrefix>/bucket_name/</RootPrefix>
+		<!--  the dirve letter of local host --> 
+		<MountDrive>F:</MountDrive>
+		<!--  cached object TTL in seconds --> 
+		<CacheTTL>180</CacheTTL>
 
 ### final.Start the blobfs service
-   lanuch gcsfuse-win.exe
+    lanuch gcsfuse-win.exe
 	
-   It is highly recommended that you should config it as a windows services.
+It is highly recommended that you should config it as a windows services.
 
 ## Tips
 * the block blob is read only by default. marked with read only flag in the popup properties windows.
@@ -78,20 +79,22 @@ Download the winfsp-1.7.20038.msi from [WinFsp](https://github.com/billziss-gh/w
 
 
 ## Command Line Usage
-usage: Blobfs-Win OPTIONS
-options:
- -d DebugFlags       [-1: enable all debug logs]
- -D DebugLogFile     [file path; use - for stderr]
- -i                  [case insensitive file system]
- -t FileInfoTimeout  [millis]
- -n MaxFileNodes
- -s MaxFileSize      [bytes]
- -F FileSystemName]
- -m MountPoint       [X:|* (required if no UNC prefix)]s
+	usage: Blobfs-Win OPTIONS
+
+	options:
+		-d DebugFlags       [-1: enable all debug logs]
+		-D DebugLogFile     [file path; use - for stderr]
+		-i                  [case insensitive file system]
+		-t FileInfoTimeout  [millis]
+		-n MaxFileNodes
+		-s MaxFileSize      [bytes]
+		-F FileSystemName]
+		-m MountPoint       [X:|* (required if no UNC prefix)]s
 
 ## License
- Copyright (C) 2020 Wesley Wu jie1975.wu@gmail.com
- This code is licensed under The General Public License version 3
+	Copyright (C) 2020 Wesley Wu jie1975.wu@gmail.com
+	This code is licensed under The General Public License version 3
 	
 ## FeedBack
- Your feedbacks are highly appreciated! :)
+	Your feedbacks are highly appreciated! :)
+
